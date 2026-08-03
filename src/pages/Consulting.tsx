@@ -3,7 +3,6 @@ export default function Consulting() {
     <main id="main-content" tabIndex={-1}>
       {/* Page header */}
       <section
-        aria-labelledby="consulting-heading"
         style={{ paddingTop: '4rem', paddingBottom: '4.5rem', borderBottom: '1px solid var(--color-border)' }}
       >
         <div className="container">
@@ -50,7 +49,6 @@ export default function Consulting() {
 
       {/* Services */}
       <section
-        aria-labelledby="services-heading"
         style={{ paddingTop: '4rem', paddingBottom: '4rem', borderBottom: '1px solid var(--color-border)' }}
       >
         <div className="container">
@@ -152,7 +150,6 @@ export default function Consulting() {
 
       {/* Who I work with */}
       <section
-        aria-labelledby="clients-heading"
         style={{ paddingTop: '4rem', paddingBottom: '4rem', borderBottom: '1px solid var(--color-border)' }}
       >
         <div className="container">
@@ -230,7 +227,6 @@ export default function Consulting() {
 
       {/* Process */}
       <section
-        aria-labelledby="process-heading"
         style={{ paddingTop: '4rem', paddingBottom: '4rem', borderBottom: '1px solid var(--color-border)' }}
       >
         <div className="container">
@@ -330,7 +326,6 @@ export default function Consulting() {
 
       {/* CTA */}
       <section
-        aria-labelledby="contact-cta-heading"
         style={{ paddingTop: '4rem', paddingBottom: '5rem' }}
       >
         <div className="container">
@@ -359,7 +354,7 @@ export default function Consulting() {
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
             <a
-              href="mailto:hello@example.com"
+              href="mailto:nicbade@me.com"
               style={{
                 display: 'inline-block',
                 padding: '0.65rem 1.5rem',
@@ -385,6 +380,7 @@ export default function Consulting() {
               href="https://example-consulting.com"
               target="_blank"
               rel="noopener noreferrer"
+              aria-disabled="true"
               style={{
                 display: 'inline-block',
                 padding: '0.65rem 1.5rem',
@@ -409,7 +405,7 @@ export default function Consulting() {
                 el.style.color = 'var(--color-accent)';
               }}
             >
-              Visit consulting site ↗
+              Visit consulting site - coming soon!↗
             </a>
           </div>
         </div>

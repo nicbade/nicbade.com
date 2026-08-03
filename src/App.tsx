@@ -175,7 +175,7 @@ export default function App() {
           >
             © {new Date().getFullYear()} Nic Bade. All rights reserved.
           </p>
-          <nav aria-label="Social and contact links">
+          <nav aria-label="Social and contact">
             <ul
               style={{
                 listStyle: 'none',
@@ -188,7 +188,7 @@ export default function App() {
             >
               <li>
                 <a
-                  href="mailto:hello@example.com"
+                  href="mailto:nicbade@me.com"
                   style={{
                     fontSize: '0.875rem',
                     color: 'var(--color-muted)',
@@ -208,7 +208,7 @@ export default function App() {
               </li>
               <li>
                 <a
-                  href="https://linkedin.com/in/example"
+                  href="https://www.linkedin.com/in/nicbade/"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -225,28 +225,6 @@ export default function App() {
                   }}
                 >
                   LinkedIn
-                  <span className="sr-only"> (opens in new tab)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/example"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: '0.875rem',
-                    color: 'var(--color-muted)',
-                    textDecoration: 'none',
-                    transition: 'color 0.15s',
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-accent)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-muted)';
-                  }}
-                >
-                  GitHub
                   <span className="sr-only"> (opens in new tab)</span>
                 </a>
               </li>

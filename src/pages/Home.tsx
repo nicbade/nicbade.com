@@ -7,7 +7,6 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
     <main id="main-content" tabIndex={-1}>
       {/* Hero / Intro */}
       <section
-        aria-labelledby="hero-heading"
         style={{ paddingTop: '4rem', paddingBottom: '4.5rem', borderBottom: '1px solid var(--color-border)' }}
       >
         <div className="container">
@@ -119,7 +118,6 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
 
       {/* About / Bio */}
       <section
-        aria-labelledby="about-heading"
         style={{ paddingTop: '4rem', paddingBottom: '4rem', borderBottom: '1px solid var(--color-border)' }}
       >
         <div className="container">
@@ -188,7 +186,6 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
 
       {/* Expertise */}
       <section
-        aria-labelledby="expertise-heading"
         style={{ paddingTop: '4rem', paddingBottom: '4rem', borderBottom: '1px solid var(--color-border)' }}
       >
         <div className="container">
@@ -273,7 +270,6 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
 
       {/* Credentials */}
       <section
-        aria-labelledby="credentials-heading"
         style={{ paddingTop: '4rem', paddingBottom: '4rem', borderBottom: '1px solid var(--color-border)' }}
       >
         <div className="container">
@@ -337,7 +333,6 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
 
       {/* Education */}
       <section
-        aria-labelledby="education-heading"
         style={{ paddingTop: '4rem', paddingBottom: '4rem', borderBottom: '1px solid var(--color-border)' }}
       >
         <div className="container">
