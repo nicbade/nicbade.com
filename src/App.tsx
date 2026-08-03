@@ -60,7 +60,7 @@ export default function App() {
               letterSpacing: '-0.01em',
             }}
           >
-            Alex Rivera
+            Nic Bade
           </button>
 
           {/* Primary nav */}
@@ -173,7 +173,7 @@ export default function App() {
               maxWidth: 'none',
             }}
           >
-            © {new Date().getFullYear()} Alex Rivera. All rights reserved.
+            © {new Date().getFullYear()} Nic Bade. All rights reserved.
           </p>
           <nav aria-label="Social and contact links">
             <ul
