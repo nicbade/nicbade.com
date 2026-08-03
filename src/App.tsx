@@ -1,11 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Home from './pages/Home';
 import Consulting from './pages/Consulting';
 
 type Page = 'home' | 'consulting';
 
+const pageTitles: Record<Page, string> = {
+  home: 'Home | nicbade.com',
+  consulting: 'Consulting | nicbade.com',
+};
+
 export default function App() {
   const [page, setPage] = useState<Page>('home');
+
+  useEffect(() => {
+    document.title = pageTitles[page];
+  }, [page]);
 
   const navigate = (target: Page) => {
     setPage(target);
