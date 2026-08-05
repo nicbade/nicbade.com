@@ -1,8 +1,17 @@
+import type { MouseEvent } from 'react';
 import portfolioPic from '@/imports/portfolioPic.JPG';
 
 type NavigateFn = (page: 'home' | 'consulting') => void;
 
+const consultingHref = `${import.meta.env.BASE_URL}consulting`;
+
 export default function Home({ navigate }: { navigate: NavigateFn }) {
+  const goToConsulting = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    navigate('consulting');
+  };
+
   return (
     <main id="main-content" tabIndex={-1}>
       {/* Hero / Intro */}
@@ -54,8 +63,9 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
                 the person with shaky hands, and anyone whose kiosk experience shouldn't be a
                 nightmare.
               </p>
-              <button
-                onClick={() => navigate('consulting')}
+              <a
+                href={consultingHref}
+                onClick={goToConsulting}
                 style={{
                   display: 'inline-block',
                   padding: '0.65rem 1.5rem',
@@ -65,20 +75,19 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
                   fontSize: '0.9375rem',
                   fontWeight: 600,
                   letterSpacing: '0.01em',
-                  border: 'none',
                   borderRadius: '3px',
-                  cursor: 'pointer',
+                  textDecoration: 'none',
                   transition: 'background 0.15s',
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.background = 'var(--color-accent-hover)';
+                  (e.currentTarget as HTMLAnchorElement).style.background = 'var(--color-accent-hover)';
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.background = 'var(--color-accent)';
+                  (e.currentTarget as HTMLAnchorElement).style.background = 'var(--color-accent)';
                 }}
               >
                 View consulting services
-              </button>
+              </a>
             </div>
 
             {/* Photo */}
@@ -154,13 +163,10 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
             </p>
             <p style={{ lineHeight: 1.8, color: 'var(--color-foreground)' }}>
               Want to work together, follow along, or just learn something new about accessibility?{' '}
-              <button
-                onClick={() => navigate('consulting')}
+              <a
+                href={consultingHref}
+                onClick={goToConsulting}
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  padding: 0,
-                  cursor: 'pointer',
                   color: 'var(--color-accent)',
                   fontFamily: 'inherit',
                   fontSize: 'inherit',
@@ -171,14 +177,14 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
                   transition: 'color 0.15s',
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.color = 'var(--color-accent-hover)';
+                  (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-accent-hover)';
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.color = 'var(--color-accent)';
+                  (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-accent)';
                 }}
               >
                 Let's connect.
-              </button>
+              </a>
             </p>
           </div>
         </div>

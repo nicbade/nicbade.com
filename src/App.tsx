@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 import Home from './pages/Home';
 import Consulting from './pages/Consulting';
 
@@ -9,21 +9,60 @@ const pageTitles: Record<Page, string> = {
   consulting: 'Consulting | nicbade.com',
 };
 
+function hrefFor(page: Page): string {
+  const base = import.meta.env.BASE_URL;
+  return page === 'home' ? base : `${base}consulting`;
+}
+
+function pageFromPathname(pathname: string): Page {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  let path = pathname;
+  if (base && path.startsWith(base)) {
+    path = path.slice(base.length) || '/';
+  }
+  if (path.length > 1 && path.endsWith('/')) {
+    path = path.slice(0, -1);
+  }
+  return path === '/consulting' ? 'consulting' : 'home';
+}
+
 export default function App() {
-  const [page, setPage] = useState<Page>('home');
+  const [page, setPage] = useState<Page>(() => pageFromPathname(window.location.pathname));
 
   useEffect(() => {
     document.title = pageTitles[page];
   }, [page]);
 
+  useEffect(() => {
+    const onPopState = () => {
+      setPage(pageFromPathname(window.location.pathname));
+      requestAnimationFrame(() => {
+        const main = document.getElementById('main-content');
+        if (main) main.focus();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
   const navigate = (target: Page) => {
+    const href = hrefFor(target);
+    if (pageFromPathname(window.location.pathname) !== target) {
+      window.history.pushState(null, '', href);
+    }
     setPage(target);
-    // Move focus to main content after navigation
     requestAnimationFrame(() => {
       const main = document.getElementById('main-content');
       if (main) main.focus();
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
+  };
+
+  const handleNavClick = (target: Page) => (e: MouseEvent<HTMLAnchorElement>) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    navigate(target);
   };
 
   return (
@@ -54,26 +93,24 @@ export default function App() {
           }}
         >
           {/* Wordmark */}
-          <button
-            onClick={() => navigate('home')}
+          <a
+            href={hrefFor('home')}
+            onClick={handleNavClick('home')}
             aria-label="Go to home page"
             style={{
-              background: 'none',
-              border: 'none',
-              padding: 0,
-              cursor: 'pointer',
               fontFamily: 'var(--font-serif)',
               fontSize: '1.0625rem',
               fontWeight: 500,
               color: 'var(--color-foreground)',
               letterSpacing: '-0.01em',
+              textDecoration: 'none',
             }}
           >
             Nic Bade
-          </button>
+          </a>
 
           {/* Primary nav */}
-          <nav aria-label="Primary navigation">
+          <nav aria-label="Primary">
             <ul
               style={{
                 listStyle: 'none',
@@ -86,20 +123,18 @@ export default function App() {
             >
               {(
                 [
-                  { label: 'Home', target: 'home' },
-                  { label: 'Consulting', target: 'consulting' },
-                ] as { label: string; target: Page }[]
+                  { label: 'Home', target: 'home' as Page },
+                  { label: 'Consulting', target: 'consulting' as Page },
+                ]
               ).map(({ label, target }) => {
                 const isCurrent = page === target;
                 return (
                   <li key={target}>
-                    <button
-                      onClick={() => navigate(target)}
+                    <a
+                      href={hrefFor(target)}
+                      onClick={handleNavClick(target)}
                       aria-current={isCurrent ? 'page' : undefined}
                       style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
                         fontFamily: 'var(--font-sans)',
                         fontSize: '0.9375rem',
                         fontWeight: isCurrent ? 600 : 400,
@@ -108,21 +143,21 @@ export default function App() {
                         borderRadius: '3px',
                         textDecoration: 'none',
                         transition: 'color 0.15s',
-                        position: 'relative',
+                        display: 'inline-block',
                       }}
                       onMouseEnter={(e) => {
                         if (!isCurrent)
-                          (e.currentTarget as HTMLButtonElement).style.color =
+                          (e.currentTarget as HTMLAnchorElement).style.color =
                             'var(--color-accent)';
                       }}
                       onMouseLeave={(e) => {
                         if (!isCurrent)
-                          (e.currentTarget as HTMLButtonElement).style.color =
+                          (e.currentTarget as HTMLAnchorElement).style.color =
                             'var(--color-foreground)';
                       }}
                     >
                       {label}
-                    </button>
+                    </a>
                   </li>
                 );
               })}
