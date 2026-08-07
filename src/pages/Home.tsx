@@ -47,39 +47,13 @@ export default function Home() {
                   lineHeight: 1.75,
                   color: 'var(--color-muted)',
                   maxWidth: '52ch',
-                  marginBottom: '2rem',
+                  marginBottom: 0,
                 }}
               >
                 I get paid to make sure the internet works for everyone — the screen reader user,
                 the person with shaky hands, and anyone whose kiosk experience shouldn't be a
                 nightmare.
               </p>
-              <a
-                href={CONSULTING_URL}
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-block',
-                  padding: '0.65rem 1.5rem',
-                  background: 'var(--color-accent)',
-                  color: '#fff',
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.9375rem',
-                  fontWeight: 600,
-                  letterSpacing: '0.01em',
-                  borderRadius: '3px',
-                  textDecoration: 'none',
-                  transition: 'background 0.15s',
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = 'var(--color-accent-hover)';
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = 'var(--color-accent)';
-                }}
-              >
-                View consulting services
-                <span className="sr-only"> (opens an external website)</span>
-              </a>
             </div>
 
             {/* Photo */}

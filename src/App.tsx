@@ -215,7 +215,7 @@ export default function App() {
             >
               <li>
                 <a
-                  href="mailto:nicbade@me.com"
+                  href="mailto:nic@nicbade.com"
                   style={{
                     fontSize: '0.875rem',
                     color: 'var(--color-muted)',
