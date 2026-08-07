@@ -1,68 +1,48 @@
-import { useEffect, useState, type MouseEvent } from 'react';
+import { useEffect, type MouseEvent } from 'react';
 import Home from './pages/Home';
-import Consulting from './pages/Consulting';
 
-type Page = 'home' | 'consulting';
+const CONSULTING_URL = 'https://truenorth-accessibility.com/';
+const homeHref = import.meta.env.BASE_URL;
 
-const pageTitles: Record<Page, string> = {
-  home: 'Home | nicbade.com',
-  consulting: 'Consulting | nicbade.com',
-};
-
-function hrefFor(page: Page): string {
-  const base = import.meta.env.BASE_URL;
-  return page === 'home' ? base : `${base}consulting`;
-}
-
-function pageFromPathname(pathname: string): Page {
-  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-  let path = pathname;
-  if (base && path.startsWith(base)) {
-    path = path.slice(base.length) || '/';
-  }
-  if (path.length > 1 && path.endsWith('/')) {
-    path = path.slice(0, -1);
-  }
-  return path === '/consulting' ? 'consulting' : 'home';
+function ExternalLinkIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ marginLeft: '0.3em', verticalAlign: '-0.05em', flexShrink: 0 }}
+    >
+      <path
+        d="M4.5 1.5H2.25A.75.75 0 0 0 1.5 2.25v7.5c0 .414.336.75.75.75h7.5a.75.75 0 0 0 .75-.75V7.5M7.5 1.5h3v3M6 6l4.5-4.5"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 }
 
 export default function App() {
-  const [page, setPage] = useState<Page>(() => pageFromPathname(window.location.pathname));
-
   useEffect(() => {
-    document.title = pageTitles[page];
-  }, [page]);
-
-  useEffect(() => {
-    const onPopState = () => {
-      setPage(pageFromPathname(window.location.pathname));
-      requestAnimationFrame(() => {
-        const main = document.getElementById('main-content');
-        if (main) main.focus();
-        window.scrollTo({ top: 0, behavior: 'instant' });
-      });
-    };
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
+    document.title = 'Home | nicbade.com';
   }, []);
 
-  const navigate = (target: Page) => {
-    const href = hrefFor(target);
-    if (pageFromPathname(window.location.pathname) !== target) {
-      window.history.pushState(null, '', href);
+  const navigateHome = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    if (window.location.pathname !== homeHref.replace(/\/$/, '') && window.location.pathname !== homeHref) {
+      window.history.pushState(null, '', homeHref);
     }
-    setPage(target);
     requestAnimationFrame(() => {
       const main = document.getElementById('main-content');
       if (main) main.focus();
       window.scrollTo({ top: 0, behavior: 'instant' });
     });
-  };
-
-  const handleNavClick = (target: Page) => (e: MouseEvent<HTMLAnchorElement>) => {
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-    e.preventDefault();
-    navigate(target);
   };
 
   return (
@@ -94,8 +74,8 @@ export default function App() {
         >
           {/* Wordmark */}
           <a
-            href={hrefFor('home')}
-            onClick={handleNavClick('home')}
+            href={homeHref}
+            onClick={navigateHome}
             aria-label="Go to home page"
             style={{
               fontFamily: 'var(--font-serif)',
@@ -121,46 +101,53 @@ export default function App() {
                 alignItems: 'center',
               }}
             >
-              {(
-                [
-                  { label: 'Home', target: 'home' as Page },
-                  { label: 'Consulting', target: 'consulting' as Page },
-                ]
-              ).map(({ label, target }) => {
-                const isCurrent = page === target;
-                return (
-                  <li key={target}>
-                    <a
-                      href={hrefFor(target)}
-                      onClick={handleNavClick(target)}
-                      aria-current={isCurrent ? 'page' : undefined}
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.9375rem',
-                        fontWeight: isCurrent ? 600 : 400,
-                        color: isCurrent ? 'var(--color-accent)' : 'var(--color-foreground)',
-                        padding: '0.35rem 0.75rem',
-                        borderRadius: '3px',
-                        textDecoration: 'none',
-                        transition: 'color 0.15s',
-                        display: 'inline-block',
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isCurrent)
-                          (e.currentTarget as HTMLAnchorElement).style.color =
-                            'var(--color-accent)';
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isCurrent)
-                          (e.currentTarget as HTMLAnchorElement).style.color =
-                            'var(--color-foreground)';
-                      }}
-                    >
-                      {label}
-                    </a>
-                  </li>
-                );
-              })}
+              <li>
+                <a
+                  href={homeHref}
+                  onClick={navigateHome}
+                  aria-current="page"
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
+                    color: 'var(--color-accent)',
+                    padding: '0.35rem 0.75rem',
+                    borderRadius: '3px',
+                    textDecoration: 'none',
+                    display: 'inline-block',
+                  }}
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href={CONSULTING_URL}
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '0.9375rem',
+                    fontWeight: 400,
+                    color: 'var(--color-foreground)',
+                    padding: '0.35rem 0.75rem',
+                    borderRadius: '3px',
+                    textDecoration: 'none',
+                    transition: 'color 0.15s',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-accent)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-foreground)';
+                  }}
+                >
+                  Consulting
+                  <ExternalLinkIcon />
+                  <span className="sr-only"> (opens an external website)</span>
+                </a>
+              </li>
               <li aria-hidden="false">
                 <span
                   aria-label="Blog — coming soon"
@@ -184,11 +171,7 @@ export default function App() {
       </header>
 
       {/* Page content */}
-      {page === 'home' ? (
-        <Home navigate={navigate} />
-      ) : (
-        <Consulting />
-      )}
+      <Home />
 
       {/* Footer */}
       <footer

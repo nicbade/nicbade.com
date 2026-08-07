@@ -1,17 +1,8 @@
-import type { MouseEvent } from 'react';
 import portfolioPic from '@/imports/portfolioPic.JPG';
 
-type NavigateFn = (page: 'home' | 'consulting') => void;
+const CONSULTING_URL = 'https://truenorth-accessibility.com/';
 
-const consultingHref = `${import.meta.env.BASE_URL}consulting`;
-
-export default function Home({ navigate }: { navigate: NavigateFn }) {
-  const goToConsulting = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-    e.preventDefault();
-    navigate('consulting');
-  };
-
+export default function Home() {
   return (
     <main id="main-content" tabIndex={-1}>
       {/* Hero / Intro */}
@@ -64,8 +55,8 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
                 nightmare.
               </p>
               <a
-                href={consultingHref}
-                onClick={goToConsulting}
+                href={CONSULTING_URL}
+                rel="noopener noreferrer"
                 style={{
                   display: 'inline-block',
                   padding: '0.65rem 1.5rem',
@@ -87,6 +78,7 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
                 }}
               >
                 View consulting services
+                <span className="sr-only"> (opens an external website)</span>
               </a>
             </div>
 
@@ -164,8 +156,8 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
             <p style={{ lineHeight: 1.8, color: 'var(--color-foreground)' }}>
               Want to work together, follow along, or just learn something new about accessibility?{' '}
               <a
-                href={consultingHref}
-                onClick={goToConsulting}
+                href={CONSULTING_URL}
+                rel="noopener noreferrer"
                 style={{
                   color: 'var(--color-accent)',
                   fontFamily: 'inherit',
@@ -184,6 +176,7 @@ export default function Home({ navigate }: { navigate: NavigateFn }) {
                 }}
               >
                 Let's connect.
+                <span className="sr-only"> (opens an external website)</span>
               </a>
             </p>
           </div>
