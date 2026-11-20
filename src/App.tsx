@@ -1,5 +1,8 @@
-import { useEffect, type MouseEvent } from 'react';
+import { lazy, Suspense, useEffect, type MouseEvent } from 'react';
+import { isHubHash, useHash } from './audit/router';
 import Home from './pages/Home';
+
+const AuditHub = lazy(() => import('./audit/AuditHub'));
 
 const CONSULTING_URL = 'https://truenorth-accessibility.com/';
 const homeHref = import.meta.env.BASE_URL;
@@ -28,6 +31,18 @@ function ExternalLinkIcon() {
 }
 
 export default function App() {
+  const hash = useHash();
+  if (isHubHash(hash)) {
+    return (
+      <Suspense fallback={<p style={{ padding: '2rem' }}>Loading Audit Hub…</p>}>
+        <AuditHub />
+      </Suspense>
+    );
+  }
+  return <Site />;
+}
+
+function Site() {
   useEffect(() => {
     document.title = 'Home | nicbade.com';
   }, []);
